@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <title>WalkToGive - Movement Meets Purpose</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Turn your daily workouts into charity donations. Track fitness, earn rewards, make a difference.">
+    <meta name="keywords" content="fitness, charity, workout, donation, health, giving">
+    <meta name="author" content="WalkToGive">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#FF6B35">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="WalkToGive">
+
+    <!-- iOS-Specific Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="WalkToGive">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icons/icon-120x120.png">
+
+    <!-- iOS Splash Screens -->
+    <link rel="apple-touch-startup-image" href="/splash/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" href="/splash/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" href="/splash/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="/splash/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="/splash/iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" href="/splash/iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="/splash/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" href="/splash/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" href="/splash/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <!-- Supabase Client (Optional - for future Supabase integration) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('✅ Service Worker registered:', registration);
+                    })
+                    .catch(error => {
+                        console.log('❌ Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // PWA Install Prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Show install button
+            const installBtn = document.getElementById('installBtn');
+            if (installBtn) {
+                installBtn.style.display = 'block';
+            }
+        });
+
+        window.installApp = function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('✅ User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        };
+    </script>
+</head>
+<body>
+    <!-- Skip to main content for keyboard users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Walk<br>To Give</h1>
+                <div class="hero-subtitle">Movement Meets Purpose</div>
+            </div>
+        </div>
+
+        <!-- Install App Button (PWA) -->
+        <button id="installBtn" onclick="installApp()" style="display: none;" class="install-btn">
+            📱 Install App
+        </button>
+
+        <!-- Auth Section -->
+        <div class="auth-section" id="authSection">
+            <!-- Logged Out State -->
+            <div id="authLoggedOut" class="auth-state">
+                <button class="auth-btn sign-in-btn" onclick="openAuthModal()" aria-label="Sign in">
+                    🔐 Sign In
+                </button>
+            </div>
+            <!-- Logged In State -->
+            <div id="authLoggedIn" class="auth-state" style="display: none;">
+                <div class="user-menu">
+                    <div class="user-info">
+                        <span class="user-name" id="userName">User</span>
+                        <span class="user-email" id="userEmail"></span>
+                    </div>
+                    <button class="auth-btn sign-out-btn" onclick="signOut()" aria-label="Sign out">
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs" role="navigation" aria-label="Main navigation">
+            <button class="nav-tab active" data-page="fitness" aria-label="View fitness page">💪 My Fitness</button>
+            <button class="nav-tab" data-page="friends" aria-label="View friends page">👥 Friends</button>
+            <button class="nav-tab" data-page="movements" aria-label="View movements page">🌟 Movements</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main id="main-content">
+            <!-- =====================================================
+                 FITNESS PAGE
+                 ===================================================== -->
+            <section id="fitness-page" class="page-section active" aria-labelledby="fitness-heading">
+            <h2 id="fitness-heading" class="visually-hidden">My Fitness</h2>
+
+            <!-- Statistics Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-icon">🔥</span>
+                    <div class="stat-value" id="totalDays">0</div>
+                    <div class="stat-label">Days Completed</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">⚡</span>
+                    <div class="stat-value" id="currentStreak">0</div>
+                    <div class="stat-label">Week Streak</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">💰</span>
+                    <div class="stat-value" id="totalEarned">$0</div>
+                    <div class="stat-label">Earned This Year</div>
+                </div>
+            </div>
+
+            <!-- Badges Section -->
+            <div class="badges-section" id="badgesSection">
+                <div class="badges-header" onclick="toggleBadgesSection()">
+                    <h3>🏆 Your Achievements</h3>
+                    <button class="collapse-btn" id="badgesCollapseBtn" aria-label="Toggle badges section">
+                        <span class="collapse-icon">▼</span>
+                    </button>
+                </div>
+                <div class="badges-content collapsed" id="badgesContent">
+                    <div class="badges-grid" id="badgesGrid"></div>
+                </div>
+            </div>
+
+            <!-- Settings Panel -->
+            <div class="settings-panel">
+                <h3>💪 Weekly Reward Range</h3>
+                <div class="reward-controls">
+                    <div class="reward-input-group">
+                        <label for="minReward">Min: $</label>
+                        <input type="number" id="minReward" value="1" min="1" max="1000" aria-label="Minimum reward amount in dollars">
+                    </div>
+                    <div class="reward-input-group">
+                        <label for="maxReward">Max: $</label>
+                        <input type="number" id="maxReward" value="5" min="1" max="1000" aria-label="Maximum reward amount in dollars">
+                    </div>
+                    <button class="btn-update" aria-label="Update reward range">Update Range</button>
+                </div>
+                <p class="info-text">
+                    ✨ Complete all 7 days in a week to earn a random reward in your range!
+                </p>
+            </div>
+
+            <!-- Month Selector -->
+            <div class="month-selector">
+                <h3>📅 Select Month - 2026</h3>
+                <div class="month-grid" id="monthButtons"></div>
+            </div>
+
+            <!-- Calendar Section -->
+            <div class="calendar-section">
+                <div class="calendar-header">
+                    <h3 id="currentMonthTitle">January 2026</h3>
+                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
+                <div class="weekly-summary" id="weeklySummary"></div>
+                <div class="monthly-total" id="monthlyTotal" style="display: none;"></div>
+            </section>
+
+        <!-- =====================================================
+             FRIENDS PAGE
+             ===================================================== -->
+        <section id="friends-page" class="page-section" aria-labelledby="friends-heading">
+            <h2 id="friends-heading" class="visually-hidden">Friends</h2>
+            <div class="social-section">
+                <h3>👥 My Friends</h3>
+
+                <!-- Invite Section -->
+                <div class="invite-section">
+                    <h4>📨 Invite Your Friends</h4>
+                    <p style="margin-bottom: 20px; opacity: 0.95;">Share your unique code or send an invite directly!</p>
+
+                    <div class="invite-code-container">
+                        <div class="invite-code-label">Your Unique Invite Code:</div>
+                        <div class="invite-code-box">
+                            <div class="invite-code" id="inviteCode">WALK2026</div>
+                            <button class="copy-btn" id="copyCodeBtn" onclick="copyInviteCode()">📋 Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="share-buttons">
+                        <button class="share-btn whatsapp" onclick="shareViaWhatsApp()">
+                            <span>📱</span> Share via WhatsApp
+                        </button>
+                        <button class="share-btn email" onclick="shareViaEmail()">
+                            <span>✉️</span> Share via Email
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add Friend Section -->
+                <div class="add-friend-section">
+                    <div class="add-friend-input">
+                        <label for="friendName" class="visually-hidden">Friend's name</label>
+                        <input type="text" id="friendName" placeholder="Enter friend's name..." aria-label="Friend's name">
+                        <button class="add-friend-btn" aria-label="Add friend">➕ Add Friend</button>
+                    </div>
+                </div>
+
+                <!-- Friends List -->
+                <div class="friends-grid" id="friendsList"></div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             MOVEMENTS PAGE
+             ===================================================== -->
+        <section id="movements-page" class="page-section" aria-labelledby="movements-heading">
+            <h2 id="movements-heading" class="visually-hidden">Movements</h2>
+            <div class="social-section">
+                <h3>🌟 Create a Movement</h3>
+
+                <!-- Create Movement Section -->
+                <div class="create-movement-section">
+                    <h4>Start a Group Challenge</h4>
+                    <div class="movement-form">
+                        <div class="movement-input-group">
+                            <label for="movementName">Movement Name</label>
+                            <input type="text" id="movementName" placeholder="e.g., Hearts for Healthcare" aria-required="true">
+                        </div>
+
+                        <div class="movement-input-group">
+                            <label for="movementCharity">Charity</label>
+                            <select id="movementCharity" aria-required="true">
+                                <option value="">Select charity...</option>
+                                <option value="American Red Cross">American Red Cross</option>
+                                <option value="Feeding America">Feeding America</option>
+                                <option value="Habitat for Humanity">Habitat for Humanity</option>
+                                <option value="World Wildlife Fund">World Wildlife Fund</option>
+                                <option value="UNICEF">UNICEF</option>
+                                <option value="Doctors Without Borders">Doctors Without Borders</option>
+                                <option value="charity: water">charity: water</option>
+                                <option value="St. Jude Children's Hospital">St. Jude Children's Hospital</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="movement-input-group">
+                            <label for="movementDescription">Description</label>
+                            <textarea id="movementDescription" placeholder="Why is this cause important to you?" aria-required="true"></textarea>
+                        </div>
+
+                        <div class="date-range">
+                            <div class="movement-input-group">
+                                <label for="movementStart">Start Date</label>
+                                <input type="date" id="movementStart" aria-required="true">
+                            </div>
+                            <div class="movement-input-group">
+                                <label for="movementEnd">End Date</label>
+                                <input type="date" id="movementEnd" aria-required="true">
+                            </div>
+                        </div>
+
+                        <button class="create-movement-btn">Create Movement</button>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 40px;">Active Movements</h3>
+                <div class="movements-list" id="movementsList"></div>
+            </div>
+        </section>
+        </main>
+    </div>
+
+    <!-- =====================================================
+         WORKOUT MODAL
+         ===================================================== -->
+    <div class="workout-modal" id="workoutModal" role="dialog" aria-labelledby="modalDate" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-btn" onclick="closeModal()" aria-label="Close workout modal">&times;</button>
+                <h2 id="modalDate"></h2>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         CELEBRATION MODAL
+         ===================================================== -->
+    <div class="celebration-modal" id="celebrationModal" role="dialog" aria-labelledby="celebrationTitle" aria-describedby="celebrationMessage" aria-modal="true">
+        <div class="celebration-content">
+            <div class="celebration-icon" id="celebrationIcon" aria-hidden="true">🎉</div>
+            <h2 class="celebration-title" id="celebrationTitle">Amazing!</h2>
+            <p class="celebration-message" id="celebrationMessage">You've earned a new achievement!</p>
+            <button class="celebration-close-btn" onclick="closeCelebration()" aria-label="Close celebration">Continue</button>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         AUTH MODAL
+         ===================================================== -->
+    <div class="auth-modal" id="authModal" role="dialog" aria-labelledby="authModalTitle" aria-modal="true">
+        <div class="modal-content auth-modal-content">
+            <div class="modal-header">
+                <button class="close-btn" onclick="closeAuthModal()" aria-label="Close authentication modal">&times;</button>
+                <h2 id="authModalTitle">Sign In to WalkToGive</h2>
+            </div>
+            <div class="modal-body auth-modal-body">
+                <p class="auth-description">
+                    Sign in to sync your progress across devices, connect with friends, and join movements!
+                </p>
+
+                <!-- Google Sign In Button -->
+                <button class="google-sign-in-btn" onclick="signInWithGoogle()" aria-label="Sign in with Google">
+                    <svg class="google-icon" viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Continue with Google
+                </button>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <p class="offline-mode-text">
+                    Continue using the app without signing in. Your data will be stored locally on this device only.
+                </p>
+
+                <button class="offline-continue-btn" onclick="closeAuthModal()" aria-label="Continue in offline mode">
+                    Continue in Offline Mode
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Modules -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

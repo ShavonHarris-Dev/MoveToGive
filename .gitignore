@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.*
+
+# Secrets and configuration files with credentials
+public/js/config/supabase-config.js
+**/config/*-config.js
+*.key
+*.pem
+*.cert
+
+# Supabase
+.supabase/
+supabase/.branches
+supabase/.temp
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Testing
+coverage/
+.nyc_output/
+
+# Documentation
+*.md
+docs/
+documentation/
+
+# Misc
+.cache/
+tmp/
+temp/

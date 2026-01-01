@@ -1,0 +1,35 @@
+{
+  "name": "walktogive",
+  "version": "1.0.0",
+  "description": "Movement meets purpose - A fitness tracking app that raises money for charity",
+  "main": "public/js/app.js",
+  "scripts": {
+    "dev": "npx live-server public --port=3000",
+    "build": "echo 'No build step needed for vanilla JS'",
+    "supabase:start": "npx supabase start",
+    "supabase:stop": "npx supabase stop",
+    "supabase:status": "npx supabase status",
+    "supabase:migrate": "npx supabase db push",
+    "supabase:reset": "npx supabase db reset",
+    "supabase:types": "npx supabase gen types typescript --local > public/js/types/database.types.ts"
+  },
+  "keywords": [
+    "fitness",
+    "charity",
+    "workout",
+    "tracking",
+    "supabase"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "supabase": "^1.200.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
