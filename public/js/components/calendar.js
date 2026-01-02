@@ -7,6 +7,7 @@ import { getCompletedDays, getWeeklyRewards, getWorkoutsForDay, completeWorkout 
 import { getDaysInMonth, getFirstDayOfMonth, getWeekNumberInMonth } from '../utils/helpers.js';
 import { formatLongDate } from '../utils/formatters.js';
 import { openModal, closeModal } from './modal.js';
+import { createStopwatch, cleanupTimer } from './timer.js';
 
 const MONTH_NAMES = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -203,12 +204,26 @@ function openWorkoutModal(monthIndex, day) {
     const completedDays = getCompletedDays();
     const isCompleted = completedDays[dateKey];
 
-    // Build workout HTML
+    // Create stopwatch at the top
+    const stopwatchHTML = createStopwatch();
+
+    // Build workout HTML with images
     let workoutHTML = '';
-    workouts.forEach(workout => {
+    workouts.forEach((workout) => {
         workoutHTML += `
             <div class="workout-item">
-                <h4>${workout.name}</h4>
+                <img
+                    src="/images/workouts/${workout.image}"
+                    alt="${workout.name}"
+                    class="workout-image"
+                    loading="lazy"
+                    decoding="async"
+                    onerror="this.src='/images/workouts/placeholder.jpg'"
+                />
+                <h4>
+                    ${workout.name}
+                    <span class="workout-duration-badge">${workout.duration} min</span>
+                </h4>
                 <p>${workout.desc}</p>
             </div>
         `;
@@ -227,7 +242,8 @@ function openWorkoutModal(monthIndex, day) {
 
     openModal({
         title: formatLongDate(date),
-        content: workoutHTML + buttonHTML
+        content: stopwatchHTML + workoutHTML + buttonHTML,
+        onClose: cleanupTimer
     });
 }
 

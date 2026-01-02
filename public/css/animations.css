@@ -13,11 +13,11 @@
     }
 }
 
-/* Slide in from bottom */
+/* Slide in from bottom - Optimized for speed */
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;

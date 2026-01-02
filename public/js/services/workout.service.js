@@ -11,46 +11,46 @@ const STORAGE_KEY = 'walktogive_data';
 // Workout definitions for each day of the week
 export const WORKOUT_DEFINITIONS = [
     [
-        { name: "Sun Salutation Flow", desc: "Complete 5 rounds of sun salutations. Each round: reach up, fold forward, step back to plank, lower down, upward dog, downward dog, step forward, fold, reach up. Flow smoothly with your breath." },
-        { name: "Dynamic Lunges", desc: "12 reps per leg of alternating forward lunges with a twist. As you lunge, rotate your torso toward the front leg. Engage your core and maintain balance throughout." },
-        { name: "Arm Circles & Shoulder Rolls", desc: "2 minutes of continuous movement: 20 forward arm circles, 20 backward, 15 shoulder rolls back, 15 forward. Keep movements controlled." },
-        { name: "Morning Stretch Hold", desc: "Hold each for 45 seconds: standing quad stretch both sides, standing hamstring fold, tricep overhead stretch both sides, neck tilts both sides." }
+        { name: "Sun Salutation Flow", desc: "Complete 5 rounds of sun salutations. Each round: reach up, fold forward, step back to plank, lower down, upward dog, downward dog, step forward, fold, reach up. Flow smoothly with your breath.", duration: 15, image: "sun-salutation-flow.jpg" },
+        { name: "Dynamic Lunges", desc: "12 reps per leg of alternating forward lunges with a twist. As you lunge, rotate your torso toward the front leg. Engage your core and maintain balance throughout.", duration: 10, image: "dynamic-lunges.jpg" },
+        { name: "Arm Circles & Shoulder Rolls", desc: "2 minutes of continuous movement: 20 forward arm circles, 20 backward, 15 shoulder rolls back, 15 forward. Keep movements controlled.", duration: 5, image: "arm-circles-shoulder-rolls.jpg" },
+        { name: "Morning Stretch Hold", desc: "Hold each for 45 seconds: standing quad stretch both sides, standing hamstring fold, tricep overhead stretch both sides, neck tilts both sides.", duration: 8, image: "morning-stretch-hold.jpg" }
     ],
     [
-        { name: "Jumping Jacks Pyramid", desc: "Pyramid style: 10 jumping jacks, 20, 30, 40, 50, then back down: 40, 30, 20, 10. Take 20-second breaks between each set." },
-        { name: "High Knees Intervals", desc: "6 rounds of 30 seconds high knees at maximum intensity, followed by 30 seconds walking in place. Drive those knees up to hip level." },
-        { name: "Burpee Challenge", desc: "3 sets of 8 burpees. Each burpee: squat, jump back to plank, optional push-up, jump feet forward, explosive jump up. Rest 90 seconds between sets." },
-        { name: "Cool Down Walk & Breathe", desc: "5-minute slow walk while practicing deep breathing: 4-count inhale through nose, 4-count hold, 6-count exhale through mouth." }
+        { name: "Jumping Jacks Pyramid", desc: "Pyramid style: 10 jumping jacks, 20, 30, 40, 50, then back down: 40, 30, 20, 10. Take 20-second breaks between each set.", duration: 12, image: "jumping-jacks-pyramid.jpg" },
+        { name: "High Knees Intervals", desc: "6 rounds of 30 seconds high knees at maximum intensity, followed by 30 seconds walking in place. Drive those knees up to hip level.", duration: 6, image: "high-knees-intervals.jpg" },
+        { name: "Burpee Challenge", desc: "3 sets of 8 burpees. Each burpee: squat, jump back to plank, optional push-up, jump feet forward, explosive jump up. Rest 90 seconds between sets.", duration: 10, image: "burpee-challenge.jpg" },
+        { name: "Cool Down Walk & Breathe", desc: "5-minute slow walk while practicing deep breathing: 4-count inhale through nose, 4-count hold, 6-count exhale through mouth.", duration: 5, image: "cool-down-walk-breathe.jpg" }
     ],
     [
-        { name: "Plank Variations", desc: "Complete this circuit twice: 45-second standard plank, 30-second right side plank, 30-second left side plank, 45-second plank with hip dips (15 per side). Rest 60 seconds between rounds." },
-        { name: "Bicycle Crunches", desc: "4 sets of 30 reps total (15 per side). Lie on back, hands behind head, bring opposite elbow to opposite knee while extending other leg. Don't pull on neck." },
-        { name: "Dead Bug Exercise", desc: "3 sets of 12 reps per side. Lie on back, arms straight up, knees at 90°. Lower opposite arm and leg toward floor without arching back. Rest 45 seconds between sets." },
-        { name: "Cat-Cow to Child's Pose", desc: "10 rounds flowing between cat-cow, then rest in child's pose for 5 deep breaths. Finish with gentle spinal twists both sides." }
+        { name: "Plank Variations", desc: "Complete this circuit twice: 45-second standard plank, 30-second right side plank, 30-second left side plank, 45-second plank with hip dips (15 per side). Rest 60 seconds between rounds.", duration: 8, image: "plank-variations.jpg" },
+        { name: "Bicycle Crunches", desc: "4 sets of 30 reps total (15 per side). Lie on back, hands behind head, bring opposite elbow to opposite knee while extending other leg. Don't pull on neck.", duration: 8, image: "bicycle-crunches.jpg" },
+        { name: "Dead Bug Exercise", desc: "3 sets of 12 reps per side. Lie on back, arms straight up, knees at 90°. Lower opposite arm and leg toward floor without arching back. Rest 45 seconds between sets.", duration: 10, image: "dead-bug-exercise.jpg" },
+        { name: "Cat-Cow to Child's Pose", desc: "10 rounds flowing between cat-cow, then rest in child's pose for 5 deep breaths. Finish with gentle spinal twists both sides.", duration: 7, image: "cat-cow-childs-pose.jpg" }
     ],
     [
-        { name: "Bodyweight Squat Pyramid", desc: "Pyramid up then down: 5 squats, 10, 15, 20, 15, 10, 5. Rest 30 seconds between sets. Focus on sitting back, chest up. Total: 80 squats!" },
-        { name: "Reverse Lunges", desc: "4 sets of 12 reps per leg. Step back into lunge, lower back knee almost to floor, drive through front heel to return. Add a knee drive at top. Rest 45 seconds." },
-        { name: "Single-Leg Glute Bridges", desc: "3 sets of 10 reps per leg. Lie on back, one foot flat, other leg extended. Lift hips high, squeezing glutes at top. Lower with control." },
-        { name: "Wall Sit Hold", desc: "3 rounds of maximum holds: sit against wall with thighs parallel to ground. Hold as long as possible (aim for 45+ seconds). Rest 60 seconds between." }
+        { name: "Bodyweight Squat Pyramid", desc: "Pyramid up then down: 5 squats, 10, 15, 20, 15, 10, 5. Rest 30 seconds between sets. Focus on sitting back, chest up. Total: 80 squats!", duration: 15, image: "bodyweight-squat-pyramid.jpg" },
+        { name: "Reverse Lunges", desc: "4 sets of 12 reps per leg. Step back into lunge, lower back knee almost to floor, drive through front heel to return. Add a knee drive at top. Rest 45 seconds.", duration: 12, image: "reverse-lunges.jpg" },
+        { name: "Single-Leg Glute Bridges", desc: "3 sets of 10 reps per leg. Lie on back, one foot flat, other leg extended. Lift hips high, squeezing glutes at top. Lower with control.", duration: 8, image: "single-leg-glute-bridges.jpg" },
+        { name: "Wall Sit Hold", desc: "3 rounds of maximum holds: sit against wall with thighs parallel to ground. Hold as long as possible (aim for 45+ seconds). Rest 60 seconds between.", duration: 7, image: "wall-sit-hold.jpg" }
     ],
     [
-        { name: "Hip Mobility Circuit", desc: "2 rounds of: 10 hip circles each direction per leg, 10 leg swings forward/back per leg, 10 leg swings side-to-side per leg, 8 deep squat holds (5 seconds each)." },
-        { name: "Shoulder Mobility Flow", desc: "Complete 2 times: 10 arm circles forward, 10 backward, 8 shoulder pass-throughs, 10 wall slides. Move slowly and feel the stretch." },
-        { name: "Yoga Flow Sequence", desc: "15-minute flow: downward dog (1 min), warrior 1 both sides (30 sec each), warrior 2 both sides (30 sec each), triangle pose both sides (30 sec each), pigeon pose both sides (1 min each)." },
-        { name: "Deep Stretching Finale", desc: "Hold each 60 seconds: seated forward fold, butterfly stretch, supine twist both sides, figure-4 hip stretch both sides, final resting pose." }
+        { name: "Hip Mobility Circuit", desc: "2 rounds of: 10 hip circles each direction per leg, 10 leg swings forward/back per leg, 10 leg swings side-to-side per leg, 8 deep squat holds (5 seconds each).", duration: 12, image: "hip-mobility-circuit.jpg" },
+        { name: "Shoulder Mobility Flow", desc: "Complete 2 times: 10 arm circles forward, 10 backward, 8 shoulder pass-throughs, 10 wall slides. Move slowly and feel the stretch.", duration: 8, image: "shoulder-mobility-flow.jpg" },
+        { name: "Yoga Flow Sequence", desc: "15-minute flow: downward dog (1 min), warrior 1 both sides (30 sec each), warrior 2 both sides (30 sec each), triangle pose both sides (30 sec each), pigeon pose both sides (1 min each).", duration: 15, image: "yoga-flow-sequence.jpg" },
+        { name: "Deep Stretching Finale", desc: "Hold each 60 seconds: seated forward fold, butterfly stretch, supine twist both sides, figure-4 hip stretch both sides, final resting pose.", duration: 10, image: "deep-stretching-finale.jpg" }
     ],
     [
-        { name: "Push-up Variations", desc: "Total 50 push-ups: 15 standard (or on knees), 15 wide-grip, 10 diamond, 10 decline (feet elevated). Rest as needed. Modify as needed." },
-        { name: "Tricep Dips Ladder", desc: "Using sturdy chair: 5 dips, rest 20 sec, 8 dips, rest 20 sec, 10 dips, rest 20 sec, 12 dips, rest 20 sec, 15 dips. Keep shoulders down." },
-        { name: "Plank to Down Dog", desc: "4 sets of 10 reps: start in plank, push hips up and back into downward dog, return to plank. Builds shoulder stability. Rest 45 seconds." },
-        { name: "Arm Circles with Resistance", desc: "Hold light weights or water bottles. 3 sets of: 30-second forward circles, 30-second backward circles, 30-second up-and-down pulses." }
+        { name: "Push-up Variations", desc: "Total 50 push-ups: 15 standard (or on knees), 15 wide-grip, 10 diamond, 10 decline (feet elevated). Rest as needed. Modify as needed.", duration: 12, image: "push-up-variations.jpg" },
+        { name: "Tricep Dips Ladder", desc: "Using sturdy chair: 5 dips, rest 20 sec, 8 dips, rest 20 sec, 10 dips, rest 20 sec, 12 dips, rest 20 sec, 15 dips. Keep shoulders down.", duration: 8, image: "tricep-dips-ladder.jpg" },
+        { name: "Plank to Down Dog", desc: "4 sets of 10 reps: start in plank, push hips up and back into downward dog, return to plank. Builds shoulder stability. Rest 45 seconds.", duration: 10, image: "plank-to-down-dog.jpg" },
+        { name: "Arm Circles with Resistance", desc: "Hold light weights or water bottles. 3 sets of: 30-second forward circles, 30-second backward circles, 30-second up-and-down pulses.", duration: 6, image: "arm-circles-resistance.jpg" }
     ],
     [
-        { name: "Gentle Walking Intervals", desc: "20 minutes total: alternate 3 minutes easy pace, 2 minutes brisk pace. Focus on posture, engage core, swing arms naturally." },
-        { name: "Foam Rolling Routine", desc: "Spend 2 minutes on each area: calves, hamstrings, IT bands, quads, upper back, glutes. Roll slowly, pause on tender spots." },
-        { name: "Yin Yoga Poses", desc: "Hold each pose for 3-5 minutes: dragon pose both sides, butterfly, supine twist both sides, legs up the wall. Deep, restorative stretching." },
-        { name: "Breathing & Meditation", desc: "10 minutes of breathwork: 5 minutes box breathing (4-4-4-4 pattern), 5 minutes of body scan meditation from toes to head." }
+        { name: "Gentle Walking Intervals", desc: "20 minutes total: alternate 3 minutes easy pace, 2 minutes brisk pace. Focus on posture, engage core, swing arms naturally.", duration: 20, image: "gentle-walking-intervals.jpg" },
+        { name: "Foam Rolling Routine", desc: "Spend 2 minutes on each area: calves, hamstrings, IT bands, quads, upper back, glutes. Roll slowly, pause on tender spots.", duration: 12, image: "foam-rolling-routine.jpg" },
+        { name: "Yin Yoga Poses", desc: "Hold each pose for 3-5 minutes: dragon pose both sides, butterfly, supine twist both sides, legs up the wall. Deep, restorative stretching.", duration: 15, image: "yin-yoga-poses.jpg" },
+        { name: "Breathing & Meditation", desc: "10 minutes of breathwork: 5 minutes box breathing (4-4-4-4 pattern), 5 minutes of body scan meditation from toes to head.", duration: 10, image: "breathing-meditation.jpg" }
     ]
 ];
 

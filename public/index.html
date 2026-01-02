@@ -386,6 +386,18 @@
         </div>
     </div>
 
+    <!-- Temporary stubs for global functions until module loads -->
+    <script>
+        // Stub functions that are called from onclick handlers
+        // These will be replaced by the actual implementations in app.js
+        window.openAuthModal = function() { console.log('Loading...'); };
+        window.closeAuthModal = function() { console.log('Loading...'); };
+        window.signInWithGoogle = function() { console.log('Loading...'); };
+        window.signOut = function() { console.log('Loading...'); };
+        window.toggleBadgesSection = function() { console.log('Loading...'); };
+        window.installApp = function() { console.log('Loading...'); };
+    </script>
+
     <!-- JavaScript Modules -->
     <script type="module" src="js/app.js"></script>
 </body>

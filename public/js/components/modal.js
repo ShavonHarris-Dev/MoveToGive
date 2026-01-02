@@ -3,13 +3,17 @@
  * Simple modal for displaying workout details
  */
 
+// Store onClose callback
+let onCloseCallback = null;
+
 /**
  * Open modal with content
  * @param {Object} options
  * @param {string} options.title
  * @param {string} options.content
+ * @param {Function} options.onClose - Optional callback when modal closes
  */
-export function openModal({ title, content }) {
+export function openModal({ title, content, onClose }) {
     const modal = document.getElementById('workoutModal');
     const modalTitle = document.getElementById('modalDate');
     const modalBody = document.getElementById('modalBody');
@@ -18,6 +22,9 @@ export function openModal({ title, content }) {
 
     modalTitle.textContent = title;
     modalBody.innerHTML = content;
+
+    // Store onClose callback
+    onCloseCallback = onClose || null;
 
     modal.classList.add('active');
 }
@@ -29,6 +36,12 @@ export function closeModal() {
     const modal = document.getElementById('workoutModal');
     if (modal) {
         modal.classList.remove('active');
+
+        // Call onClose callback if it exists
+        if (onCloseCallback && typeof onCloseCallback === 'function') {
+            onCloseCallback();
+            onCloseCallback = null; // Clear callback after calling
+        }
     }
 }
 

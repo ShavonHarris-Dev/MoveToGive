@@ -174,7 +174,10 @@ export async function getUserProfile() {
         if (error) {
             // If profile doesn't exist, create it
             if (error.code === 'PGRST116') {
-                return await createUserProfile(user);
+                return await createUserProfile(user.id, {
+                    display_name: user.user_metadata?.display_name || user.email?.split('@')[0] || 'User',
+                    email: user.email
+                });
             }
             throw error;
         }
@@ -188,10 +191,13 @@ export async function getUserProfile() {
 
 /**
  * Create user profile
- * @param {Object} user - User object from auth
+ * @param {string} userId - User ID
+ * @param {Object} profileData - Profile data (display_name, email, etc.)
  * @returns {Promise<Object|null>}
  */
-async function createUserProfile(user) {
+export async function createUserProfile(userId, profileData = {}) {
+    if (!isSupabaseConfigured()) return null;
+
     try {
         // Generate unique invite code
         const inviteCode = generateInviteCode();
@@ -199,8 +205,8 @@ async function createUserProfile(user) {
         const { data, error } = await supabase
             .from('profiles')
             .insert({
-                id: user.id,
-                display_name: user.email?.split('@')[0] || 'User',
+                id: userId,
+                display_name: profileData.display_name || profileData.email?.split('@')[0] || 'User',
                 invite_code: inviteCode,
                 min_reward: 1,
                 max_reward: 5
